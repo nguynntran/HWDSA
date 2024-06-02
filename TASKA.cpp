@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 bool BinarySearch(const int* begin, const int* end, int target) {
   while (begin < end) {
     const int* mid = begin + (end - begin) / 2;
@@ -16,18 +17,24 @@ bool BinarySearch(const int* begin, const int* end, int target) {
 }
 
 int main() {
-  int N, Q;
+  size_t N, Q;
   std::cin >> N;
   std::vector<int> arr(N);
 
-  for (int i = 0; i < N; ++i) {
+  for (size_t i = 0; i < N; ++i) {
     std::cin >> arr[i];
   }
   std::cin >> Q;
 
-  for (int k = 0; k < Q; ++k) {
-    int i, j, t;
+  for (size_t k = 0; k < Q; ++k) {
+    size_t i, j;
+    int t;
     std::cin >> i >> j >> t;
+
+    if (i >= N || j > N || i > j) {
+      std::cout << "NO" << std::endl;
+      continue;
+    }
 
     const int* begin = &arr[i];
     const int* end = &arr[j];
