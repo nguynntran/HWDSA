@@ -33,11 +33,14 @@ class CSVGraphApp:
         self.init_figure()
 
     def init_figure(self):
-        """Initialize the figure with the current configuration."""
+        """Initialize or update the figure with the current configuration."""
+        if hasattr(self, "canvas"):  # Destroy the old canvas if it exists
+            self.canvas.get_tk_widget().destroy()
+
         self.figure = plt.Figure(figsize=(self.figure_config["width"], self.figure_config["height"]),
                                  dpi=self.figure_config["dpi"])
         self.canvas = FigureCanvasTkAgg(self.figure, self.root)
-        self.canvas.get_tk_widget().pack()
+        self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
     def configure_figure(self):
         """Open a dialog to configure figure settings."""
@@ -47,7 +50,7 @@ class CSVGraphApp:
 
         if width and height and dpi:
             self.figure_config.update({"width": width, "height": height, "dpi": dpi})
-            self.init_figure()  # Reinitialize figure with new settings
+            self.init_figure()  # Reinitialize figure and scale the graph
             messagebox.showinfo("Figure Configuration", "Figure configuration updated successfully.")
 
     def load_files(self):
